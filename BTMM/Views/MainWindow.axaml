@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:BTMM.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:BTMM.Views"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+        x:Class="BTMM.Views.MainWindow"
+        Icon="/Assets/logo.ico"
+        Title="BTMM" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+  <Viewbox Stretch="None">
+    <views:MainView MinWidth="200" MinHeight="100"
+                    Width="900" Height="600" />
+  </Viewbox>
+</Window>
