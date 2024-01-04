@@ -1,9 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-
-using BTMM.ViewModels;
+using BTMM.ViewModels.Pages;
 using BTMM.Views;
+using BTMM.Views.Pages;
 
 namespace BTMM;
 
@@ -21,13 +21,13 @@ public class App : Application
             case IClassicDesktopStyleApplicationLifetime desktop:
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainViewModel()
+                    DataContext = new MainPageModel()
                 };
                 break;
             case ISingleViewApplicationLifetime singleViewPlatform:
-                singleViewPlatform.MainView = new MainView
+                singleViewPlatform.MainView = new MainPage
                 {
-                    DataContext = new MainViewModel()
+                    DataContext = new MainPageModel()
                 };
                 break;
         }
