@@ -30,6 +30,7 @@ class Program
         finally
         {
             Log.CloseAndFlush();
+            Log.Info("CloseAndFlush");
         }
     }
 

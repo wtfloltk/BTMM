@@ -1,3 +1,11 @@
 ﻿{
-  "AppName": "BTMM"
+  "AppName": "BTMM",
+  "Settings": "Settings",
+  "About": "About",
+  "_File": "_File",
+  "_Exit": "_Exit",
+  "_Tools": "_Tools",
+  "_Settings": "_Settings",
+  "_Help": "_Help",
+  "_About": "_About"
 }

@@ -13,10 +13,11 @@ public class LocalizeExtension : MarkupExtension
         Key = key;
     }
 
-    // ReSharper disable once MemberCanBePrivate.Global
-    public string? Key { get; set; }
+    private string? Key { get; }
 
     public string? Context { get; set; }
+
+    public string? StringFormat { get; set; }
 
     [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Localization))]
     public override object ProvideValue(IServiceProvider serviceProvider)
@@ -29,6 +30,7 @@ public class LocalizeExtension : MarkupExtension
         {
             Mode = BindingMode.OneWay,
             Source = Localization.Instance,
+            StringFormat = !string.IsNullOrEmpty(StringFormat) ? StringFormat : null,
         };
 
         return binding.ProvideValue(serviceProvider);

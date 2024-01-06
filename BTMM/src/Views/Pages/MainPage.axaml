@@ -10,16 +10,8 @@
         <vm:MainPageModel />
     </Design.DataContext>
 
-    <!-- xmlns:t="clr-namespace:BTMM.Utility.Localization" -->
+    <Grid RowDefinitions="*,*,Auto">
 
-    <!-- <StackPanel Orientation="Vertical" Margin="15"> -->
-    <!--     <Label Content="{t:Localize Language}" /> -->
-    <!--     <ComboBox SelectedIndex="0" SelectionChanged="OnLanguageChanged"> -->
-    <!--         <ComboBoxItem>English</ComboBoxItem> -->
-    <!--         <ComboBoxItem>中文</ComboBoxItem> -->
-    <!--     </ComboBox> -->
-    <!-- -->
-    <!--     <TextBlock FontSize="21" Text="{t:Localize AppName}" /> -->
-    <!--     <TextBlock FontSize="21" Text="{t:Localize MissingTranslation}" /> -->
-    <!-- </StackPanel> -->
+
+    </Grid>
 </UserControl>

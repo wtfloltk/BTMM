@@ -1,5 +1,8 @@
-﻿namespace BTMM.ViewModels.Pages;
+﻿using BTMM.ViewModels.Base;
 
-public class MainPageModel : ViewModelBase
+namespace BTMM.ViewModels.Pages;
+
+public class MainPageModel : BaseViewModel
 {
+
 }

@@ -3,11 +3,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:pages="clr-namespace:BTMM.Views.Pages"
+        xmlns:vm="clr-namespace:BTMM.ViewModels"
+        xmlns:t="clr-namespace:BTMM.Utility.Localization"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="BTMM.Views.MainWindow"
         Icon="/assets/logo.ico"
-        Title="BTMM" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
-    <Viewbox Stretch="None">
+        MinWidth="200" MinHeight="100"
+        Title="{t:Localize AppName}"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
+    <Design.DataContext>
+        <vm:MainWindowModel />
+    </Design.DataContext>
+    <Panel>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="{t:Localize _File}">
+                    <MenuItem Header="{t:Localize _Exit}" Click="OnMenu_File_Exit_Click" />
+                </MenuItem>
+                <MenuItem Header="{t:Localize _Tools}">
+                    <MenuItem Header="{t:Localize _Settings, StringFormat='{}{0}...'}"
+                              Click="OnMenu_Tools_Settings_Click" />
+                </MenuItem>
+                <MenuItem Header="{t:Localize _Help}">
+                    <MenuItem Header="{t:Localize _About, StringFormat='{}{0}...'}"
+                              Click="OnMenu_Help_About_Click" />
+                </MenuItem>
+            </Menu>
+            <TextBlock />
+        </DockPanel>
         <pages:MainPage />
-    </Viewbox>
+    </Panel>
 </Window>

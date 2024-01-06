@@ -45,6 +45,10 @@
           <DependentUpon>SettingsPage.axaml</DependentUpon>
           <SubType>Code</SubType>
       </Compile>
+      <Compile Update="src\Views\Windows\AboutWindow.axaml.cs">
+          <DependentUpon>AboutWindow.axaml</DependentUpon>
+          <SubType>Code</SubType>
+      </Compile>
   </ItemGroup>
 
   <ItemGroup>

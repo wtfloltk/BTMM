@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Avalonia.Controls;
-using BTMM.Utility.Dialog;
+﻿using Avalonia.Controls;
 
 namespace BTMM.Views.Pages;
 
