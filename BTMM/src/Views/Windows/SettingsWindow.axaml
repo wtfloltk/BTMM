@@ -8,12 +8,12 @@
         x:Class="BTMM.Views.Windows.SettingsWindow"
         Icon="/assets/logo.ico"
         MinWidth="200" MinHeight="100"
-        Title="{t:Localize Settings}"
-        SizeToContent="WidthAndHeight">
+        Width="500" Height="300"
+        Title="{t:Localize Settings}">
     <Design.DataContext>
         <vm:SettingsWindowModel />
     </Design.DataContext>
-    <Panel Width="500" Height="300">
+    <Panel>
 
     </Panel>
 </Window>

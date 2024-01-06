@@ -3,7 +3,7 @@
 <img src="https://github.com/zelda-mods/BTMM/blob/main/docs/logo.png?raw=true" alt="logo" />
 
 
-### Breath of the Wild And Tea of the Kingdom Mod Manager
+### Mod manager for Breath of the Wild and Tears of the Kingdom
 
 automatic create/merging/load of bnp mod
 

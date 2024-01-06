@@ -1,7 +1,9 @@
 ﻿{
-  "AppName": "BTMM",
+  "AppShotName": "BTMM",
+  "AppName": "Mod manager for Breath of the Wild and Tears of the Kingdom",
   "Settings": "Settings",
   "About": "About",
+  "Version": "Version",
   "_File": "_File",
   "_Exit": "_Exit",
   "_Tools": "_Tools",

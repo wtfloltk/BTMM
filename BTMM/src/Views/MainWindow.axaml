@@ -9,8 +9,7 @@
         x:Class="BTMM.Views.MainWindow"
         Icon="/assets/logo.ico"
         MinWidth="200" MinHeight="100"
-        Title="{t:Localize AppName}"
-        SizeToContent="WidthAndHeight"
+        Title="{t:Localize AppShotName}"
         WindowStartupLocation="CenterScreen">
     <Design.DataContext>
         <vm:MainWindowModel />

@@ -1,7 +1,9 @@
 ﻿{
-  "AppName": "BTMM",
+  "AppShotName": "BTMM",
+  "AppName": "荒野之息和王国之泪的Mod管理器",
   "Settings": "设置",
   "About": "关于",
+  "Version": "版本",
   "_File": "_文件",
   "_Exit": "_退出",
   "_Tools": "_工具",

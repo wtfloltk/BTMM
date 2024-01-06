@@ -4,16 +4,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:BTMM.ViewModels.Windows"
         xmlns:t="clr-namespace:BTMM.Utility.Localization"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
         x:Class="BTMM.Views.Windows.AboutWindow"
         Icon="/assets/logo.ico"
         MinWidth="200" MinHeight="100"
-        Title="{t:Localize About}"
-        SizeToContent="WidthAndHeight">
+        Width="500" Height="200"
+        Title="{t:Localize About}">
     <Design.DataContext>
         <vm:AboutWindowModel />
     </Design.DataContext>
-    <Panel Width="500" Height="300">
-
+    <Panel>
+        <ScrollViewer>
+            <StackPanel>
+                <DockPanel Dock="Top" MaxHeight="80" Height="60">
+                    <TextBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        IsReadOnly="True"
+                        FontWeight="Bold"
+                        TextWrapping="Wrap"
+                        FontSize="20"
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"
+                        Text="{t:Localize AppName}" />
+                </DockPanel>
+                <WrapPanel Margin="0,10,0,0" HorizontalAlignment="Center">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"
+                        Text="{t:Localize Version, StringFormat='{}{0}: '}" />
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"
+                        Text="{Binding Version}" />
+                </WrapPanel>
+                <WrapPanel Margin="0,20,0,0" HorizontalAlignment="Center">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"
+                        Text="Github:    " />
+                    <TextBlock
+                        Text="{Binding Github}"
+                        Foreground="Blue"
+                        Cursor="{Binding LinkCursor}"
+                        PointerPressed="OnGithubLinkClick" />
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Panel>
 </Window>
