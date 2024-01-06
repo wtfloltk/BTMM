@@ -1,13 +1,14 @@
 ﻿using BTMM.Utility.Save.Adapter;
 
-namespace BTMM.Utility.Save.SaveObject;
+namespace BTMM.Utility.Save;
 
 public class SaveProxy
 {
-    public static SaveProxy Default { get; } = new SaveProxy();
     private static readonly ISaveDataAdapter DefaultSaveDataAdapter = new SaveDataLocalAdapter();
-    public ISaveDataAdapter Adapter { get; set; }
-    public string SaveRootPath => Adapter.SavePath;
+
+    private ISaveDataAdapter Adapter { get; }
+
+    public string SavePath => Adapter.SavePath;
 
     public string GetString(string key, string defaultValue = "")
     {

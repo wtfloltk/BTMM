@@ -1,13 +1,13 @@
-﻿using BTMM.Utility.Save.Adapter;
-
-namespace BTMM.Utility.Save.SaveObject;
+﻿namespace BTMM.Utility.Save.SaveObject;
 
 public abstract class JsonSaveObject<T> where T : new()
 {
-    private static readonly string saveKey = typeof(T).Name;
-    public static SaveProxy SaveProxy { get; protected set; } = new (new SaveDataLocalAdapter("userdata", ".json"));
+    private static readonly string SaveKey = typeof(T).Name;
+
+    private static SaveProxy SaveProxy => SaveTools.Proxy;
 
     private static T? _instance;
+
     public static T Instance
     {
         get
@@ -17,29 +17,23 @@ public abstract class JsonSaveObject<T> where T : new()
         }
     }
 
-    protected JsonSaveObject()
+    private JsonSaveObject()
     {
-
     }
 
-    protected static T Load()
+    private static T Load()
     {
-        var data = SaveProxy.GetString(saveKey, "");
-        if (!string.IsNullOrEmpty(data))
-        {
-            var obj = JsonUtils.ToObject<T>(data);
-            if (obj != null) return obj;
-        }
-        return new T();
+        var data = SaveProxy.GetString(SaveKey);
+        if (string.IsNullOrEmpty(data)) return new T();
+        var obj = JsonUtils.ToObject<T>(data);
+        return obj ?? new T();
     }
     public void Save()
     {
         var value = JsonUtils.ToJson(this);
-        SaveProxy.SetString(saveKey, value);
-        SaveProxy.Save(saveKey);
+        SaveProxy.SetString(SaveKey, value);
+        SaveProxy.Save(SaveKey);
     }
-    public string GetSavePath(string key)
-    {
-        return SaveProxy.GetSavePath(key);
-    }
+
+    public string GetSavePath(string key) => SaveProxy.GetSavePath(key);
 }

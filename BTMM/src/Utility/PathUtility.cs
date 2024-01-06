@@ -1,17 +1,15 @@
-﻿using System;
+﻿using BTMM.Utility.Save;
 
 namespace BTMM.Utility;
 
 public class PathUtility
 {
-    public static string GetApplicationPath()
-    {
-        var appPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-        if (appPath == null)
-        {
-            throw new Exception("GetApplicationPath Error: appPath is null");
-        }
+    public static string ApplicationPath => SaveTools.GetApplicationPath();
 
-        return appPath;
-    }
+    public static string UserDataPath => SaveTools.GetUserDataPath();
+
+    public static string SaveDataPath => SaveTools.SaveDataPath;
+
+    public static string GetSaveDataPath(bool isSaveToApplicationFolder) =>
+        SaveTools.GetSaveDataPath(isSaveToApplicationFolder);
 }

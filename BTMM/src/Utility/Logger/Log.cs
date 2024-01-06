@@ -36,6 +36,68 @@ public static class Log
             .CreateLogger();
     }
 
+    public static void Verbose(string message)
+    {
+        Serilog.Log.Verbose(message);
+    }
+
+    public static void Verbose(string message, params object?[]? propertyValues)
+    {
+        Serilog.Log.Verbose(message, propertyValues);
+    }
+
+    public static void Verbose<T>(string message, T propertyValue)
+    {
+        Serilog.Log.Verbose(message, propertyValue);
+    }
+
+    public static void Verbose<T0, T1>(string message, T0 propertyValue0, T1 propertyValue1)
+    {
+        Serilog.Log.Verbose(message, propertyValue0, propertyValue1);
+    }
+
+    public static void Verbose<T0, T1, T2>(string message, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2)
+    {
+        Serilog.Log.Debug(message, propertyValue0, propertyValue1, propertyValue2);
+    }
+
+    public static void Verbose<T0, T1, T2, T3>(string message, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2,
+        T3 propertyValue3)
+    {
+        Serilog.Log.Verbose(message, propertyValue0, propertyValue1, propertyValue2, propertyValue3);
+    }
+
+    public static void Debug(string message)
+    {
+        Serilog.Log.Debug(message);
+    }
+
+    public static void Debug(string message, params object?[]? propertyValues)
+    {
+        Serilog.Log.Debug(message, propertyValues);
+    }
+
+    public static void Debug<T>(string message, T propertyValue)
+    {
+        Serilog.Log.Debug(message, propertyValue);
+    }
+
+    public static void Debug<T0, T1>(string message, T0 propertyValue0, T1 propertyValue1)
+    {
+        Serilog.Log.Debug(message, propertyValue0, propertyValue1);
+    }
+
+    public static void Debug<T0, T1, T2>(string message, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2)
+    {
+        Serilog.Log.Debug(message, propertyValue0, propertyValue1, propertyValue2);
+    }
+
+    public static void Debug<T0, T1, T2, T3>(string message, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2,
+        T3 propertyValue3)
+    {
+        Serilog.Log.Debug(message, propertyValue0, propertyValue1, propertyValue2, propertyValue3);
+    }
+
     public static void Info(string message)
     {
         Serilog.Log.Information(message);
@@ -154,6 +216,63 @@ public static class Log
     public static void Error<T0, T1, T2, T3>(Exception? e,string message, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2, T3 propertyValue3)
     {
         Serilog.Log.Error(e, message, propertyValue0, propertyValue1, propertyValue2, propertyValue3);
+    }
+
+    public static void Fatal(string message)
+    {
+        Serilog.Log.Fatal(message);
+    }
+
+    public static void Fatal(string message, params object?[]? propertyValues)
+    {
+        Serilog.Log.Fatal(message, propertyValues);
+    }
+
+    public static void Fatal<T>(string message, T propertyValue)
+    {
+        Serilog.Log.Fatal(message, propertyValue);
+    }
+
+    public static void Fatal<T0, T1>(string message, T0 propertyValue0, T1 propertyValue1)
+    {
+        Serilog.Log.Fatal(message, propertyValue0, propertyValue1);
+    }
+
+    public static void Fatal<T0, T1, T2>(string message, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2)
+    {
+        Serilog.Log.Fatal(message, propertyValue0, propertyValue1, propertyValue2);
+    }
+
+    public static void Fatal<T0, T1, T2, T3>(string message, T0 propertyValue0, T1 propertyValue1, T2 propertyValue2,
+        T3 propertyValue3)
+    {
+        Serilog.Log.Fatal(message, propertyValue0, propertyValue1, propertyValue2, propertyValue3);
+    }
+
+    public static void Fatal(Exception? e, string message)
+    {
+        Serilog.Log.Fatal(e, message);
+    }
+
+    public static void Fatal(Exception? e, string message, params object?[]? propertyValues)
+    {
+        Serilog.Log.Fatal(e, message, propertyValues);
+    }
+
+    public static void Fatal<T>(Exception? e, string message, T propertyValue)
+    {
+        Serilog.Log.Fatal(e, message, propertyValue);
+    }
+
+    public static void Fatal<T0, T1>(Exception? e, string message, T0 propertyValue0, T1 propertyValue1)
+    {
+        Serilog.Log.Fatal(e, message, propertyValue0, propertyValue1);
+    }
+
+    public static void Fatal<T0, T1, T2>(Exception? e, string message, T0 propertyValue0, T1 propertyValue1,
+        T2 propertyValue2)
+    {
+        Serilog.Log.Fatal(e, message, propertyValue0, propertyValue1, propertyValue2);
     }
 
     public static void CloseAndFlush()

@@ -1,9 +1,8 @@
 ﻿using System;
-
-namespace BTMM.Utility.Save.Adapter;
-
 using System.Collections.Generic;
 using System.IO;
+
+namespace BTMM.Utility.Save.Adapter;
 
 /// <summary> 本地目录保存 </summary>
 public class SaveDataLocalAdapter : ISaveDataAdapter
@@ -20,7 +19,7 @@ public class SaveDataLocalAdapter : ISaveDataAdapter
     public SaveDataLocalAdapter(string savePath, string exName)
     {
         _exName = exName.ToLower();
-        SavePath = Path.IsPathRooted(savePath) ? savePath : Path.Combine(PathUtility.GetApplicationPath(), savePath);
+        SavePath = Path.IsPathRooted(savePath) ? savePath : Path.Combine(SaveTools.GetApplicationPath(), savePath);
         Load();
     }
 
