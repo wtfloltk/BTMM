@@ -14,3 +14,4 @@ for %%p in (%TargetPlatforms%) do (
 )
 echo.
 echo all build success
+pause
