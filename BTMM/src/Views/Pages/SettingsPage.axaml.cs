@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using BTMM.Utility.Localization;
+using BTMM.Utility.Settings;
 
 namespace BTMM.Views.Pages;
 
@@ -10,10 +11,9 @@ public partial class SettingsPage : UserControl
         InitializeComponent();
     }
 
-    private void OnLanguageChanged(object sender, SelectionChangedEventArgs args)
+    private void OnLanguageChange(object? sender, SelectionChangedEventArgs e)
     {
-        var cb = sender as ComboBox;
-        var language = cb.SelectedIndex == 0 ? "en-US" : "zh-CN";
-        Localization.Instance.LoadLanguage(language);
+        var c = sender as ComboBox;
+        Settings.Instance.SetLanguage(c.SelectedIndex == 0 ? "en-US" : "zh-CN");
     }
 }

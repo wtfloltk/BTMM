@@ -5,21 +5,19 @@
              xmlns:vm="clr-namespace:BTMM.ViewModels.Pages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              MinWidth="200" MinHeight="100" Width="900" Height="600"
+             xmlns:t="clr-namespace:BTMM.Utility.Localization"
              x:Class="BTMM.Views.Pages.SettingsPage">
     <Design.DataContext>
         <vm:SettingsPageModel />
     </Design.DataContext>
 
-    <!-- xmlns:t="clr-namespace:BTMM.Utility.Localization" -->
-
-    <!-- <StackPanel Orientation="Vertical" Margin="15"> -->
-    <!--     <Label Content="{t:Localize Language}" /> -->
-    <!--     <ComboBox SelectedIndex="0" SelectionChanged="OnLanguageChanged"> -->
-    <!--         <ComboBoxItem>English</ComboBoxItem> -->
-    <!--         <ComboBoxItem>中文</ComboBoxItem> -->
-    <!--     </ComboBox> -->
-    <!-- -->
-    <!--     <TextBlock FontSize="21" Text="{t:Localize AppName}" /> -->
-    <!--     <TextBlock FontSize="21" Text="{t:Localize MissingTranslation}" /> -->
-    <!-- </StackPanel> -->
+    <StackPanel Orientation="Vertical" Margin="15">
+        <Label Content="{t:Localize Language}" />
+        <ComboBox SelectedIndex="0" SelectionChanged="OnLanguageChange">
+            <ComboBoxItem>English</ComboBoxItem>
+            <ComboBoxItem>中文</ComboBoxItem>
+        </ComboBox>
+        <TextBlock FontSize="21" Text="{t:Localize AppName}" />
+        <TextBlock FontSize="21" Text="{t:Localize MissingTranslation}" />
+    </StackPanel>
 </UserControl>

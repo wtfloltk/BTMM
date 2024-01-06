@@ -13,7 +13,8 @@ public class LocalizeExtension : MarkupExtension
         Key = key;
     }
 
-    public string Key { get; set; }
+    // ReSharper disable once MemberCanBePrivate.Global
+    public string? Key { get; set; }
 
     public string? Context { get; set; }
 

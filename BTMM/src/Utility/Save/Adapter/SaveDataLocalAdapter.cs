@@ -4,7 +4,7 @@ using System.IO;
 
 namespace BTMM.Utility.Save.Adapter;
 
-/// <summary> 本地目录保存 </summary>
+/// <summary> local folder save data </summary>
 public class SaveDataLocalAdapter : ISaveDataAdapter
 {
     private static readonly object LockObj = new();
@@ -20,7 +20,7 @@ public class SaveDataLocalAdapter : ISaveDataAdapter
     {
         _exName = exName.ToLower();
         SavePath = Path.IsPathRooted(savePath) ? savePath : Path.Combine(SaveTools.GetApplicationPath(), savePath);
-        Load();
+        _Load();
     }
 
     private readonly string _exName;
@@ -77,22 +77,21 @@ public class SaveDataLocalAdapter : ISaveDataAdapter
         File.WriteAllText(path, value);
     }
 
-    private void Load()
+    private void _Load()
     {
-        var dir = SavePath;
-        if (!Directory.Exists(dir)) return;
-        var files = Directory.GetFiles(dir);
+        if (!Directory.Exists(SavePath)) return;
+        var files = Directory.GetFiles(SavePath);
         if (files.Length == 0) return;
         foreach (var file in files)
         {
-            if (!CheckExName(file)) continue;
+            if (!_CheckExName(file)) continue;
             var fileName = Path.GetFileNameWithoutExtension(file);
             if (File.Exists(file))
                 _data[fileName] = File.ReadAllText(file);
         }
     }
 
-    private bool CheckExName(string file)
+    private bool _CheckExName(string file)
     {
         var exName = Path.GetExtension(file).ToLower();
         return _exName == exName;

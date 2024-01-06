@@ -1,21 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text;
-using Avalonia.Platform;
+using BTMM.Utility.Logger;
 using Newtonsoft.Json;
 
 namespace BTMM.Utility.Localization;
 
 public class Localization : INotifyPropertyChanged
 {
-    public static Localization Instance { get; private set; } = new("en-US");
+    public static Localization Instance { get; } = new();
+
+    private static Dictionary<string, string>? _languages;
+
+    private const string DefaultLanguage = "en-US";
+
+    private static string LanguagePath => Path.Combine(PathUtility.AppDataPath, "languages");
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private const string IndexerName = "Item";
     private const string IndexerArrayName = "Item[]";
     private Dictionary<string, string>? _strings;
+
+    private Localization()
+    {
+        var languageCode = Settings.Settings.Instance.Language ?? CultureInfo.CurrentCulture.Name;
+        if (!ExistsLanguage(languageCode))
+            languageCode = DefaultLanguage;
+        Language = languageCode;
+        InitLanguage(Language);
+    }
 
     public string Language { get; private set; }
 
@@ -29,22 +46,59 @@ public class Localization : INotifyPropertyChanged
         }
     }
 
-    public Localization(string language)
+    public static Dictionary<string, string> GetLanguages(bool forceUpdate = false)
     {
-        Language = language;
-    }
-
-    public bool LoadLanguage(string language)
-    {
-        Language = language;
-        var uri = new Uri($"avares://BTMM.Core/assets/languages/{language}.json");
-        if (!AssetLoader.Exists(uri)) return false;
-
-        using (var sr = new StreamReader(AssetLoader.Open(uri), Encoding.UTF8))
+        if (_languages != null && !forceUpdate) return _languages;
+        _languages = new Dictionary<string, string>();
+        var files = Directory.GetFiles(LanguagePath, "*.json", SearchOption.TopDirectoryOnly);
+        foreach (var file in files)
         {
-            _strings = JsonConvert.DeserializeObject<Dictionary<string, string>>(sr.ReadToEnd());
+            var fileName = Path.GetFileNameWithoutExtension(file);
+            try
+            {
+                var info = new CultureInfo(fileName);
+                _languages[fileName] = info.NativeName;
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
+        return _languages;
+    }
+
+    private static bool ExistsLanguage(string language)
+    {
+        var languagePath = Path.Combine(LanguagePath, language + ".json");
+        return File.Exists(languagePath);
+    }
+
+    public bool InitLanguage(string language)
+    {
+        if (!ExistsLanguage(language))
+        {
+            language = DefaultLanguage;
+        }
+
+        var languagePath = Path.Combine(LanguagePath, language + ".json");
+        if (!File.Exists(languagePath))
+        {
+            return false;
+        }
+
+        try
+        {
+            var languageData = File.ReadAllText(languagePath, Encoding.UTF8);
+            _strings = JsonConvert.DeserializeObject<Dictionary<string, string>>(languageData);
+        }
+        catch (Exception e)
+        {
+            Log.Error($"init language error: {e.Message}");
+            return false;
+        }
+
+        Language = language;
         OnChange();
         return true;
     }

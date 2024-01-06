@@ -16,6 +16,12 @@
 
   <ItemGroup>
     <AvaloniaResource Include="assets\**" />
+    <None Include="data\languages\en-US.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\languages\zh-CN.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,5 +49,10 @@
 
   <ItemGroup>
     <Folder Include="data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="assets\languages\en-US.json"/>
+    <UpToDateCheckInput Remove="assets\languages\zh-CN.json"/>
   </ItemGroup>
 </Project>
