@@ -1,8 +1,9 @@
 ﻿using System;
-
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Logging;
 using Avalonia.ReactiveUI;
+using BTMM.Utility.Exceptions;
 using BTMM.Utility.Logger;
 
 namespace BTMM;
@@ -17,12 +18,14 @@ class Program
     {
         try
         {
+            ExceptionHandle.Init();
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
         }
         catch (Exception e)
         {
-            Log.Error(e, e.Message);
+            if (Debugger.IsAttached) Debugger.Break();
+            Log.Fatal(e, e.Message);
         }
         finally
         {
