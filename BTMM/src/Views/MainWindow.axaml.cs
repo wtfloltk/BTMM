@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using BTMM.Utility.Localization;
 
 namespace BTMM.Views;
 

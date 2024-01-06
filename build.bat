@@ -1,5 +1,5 @@
 @echo off
-set "ProjectPath=%~dp0BTMM.Desktop\BTMM.Desktop.csproj"
+set "ProjectPath=%~dp0BTMM\BTMM.csproj"
 set "ReleasePath=bin\Release"
 
 echo clear %ReleasePath%...

@@ -5,7 +5,7 @@
         xmlns:pages="clr-namespace:BTMM.Views.Pages"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="BTMM.Views.MainWindow"
-        Icon="/Assets/logo.ico"
+        Icon="/assets/logo.ico"
         Title="BTMM" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Viewbox Stretch="None">
         <pages:MainPage />

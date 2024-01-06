@@ -37,7 +37,7 @@ public class Localization : INotifyPropertyChanged
     public bool LoadLanguage(string language)
     {
         Language = language;
-        var uri = new Uri($"avares://BTMM.Core/Assets/Languages/{language}.json");
+        var uri = new Uri($"avares://BTMM.Core/assets/languages/{language}.json");
         if (!AssetLoader.Exists(uri)) return false;
 
         using (var sr = new StreamReader(AssetLoader.Open(uri), Encoding.UTF8))
