@@ -4,12 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:pages="clr-namespace:BTMM.Views.Pages"
         xmlns:vm="clr-namespace:BTMM.ViewModels"
-        xmlns:t="clr-namespace:BTMM.Utility.Localization"
+        xmlns:localization="clr-namespace:BTMM.Common.Localization"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="BTMM.Views.MainWindow"
         Icon="/assets/logo.ico"
         MinWidth="200" MinHeight="100"
-        Title="{t:Localize AppShotName}"
+        Width="{Binding Width, Mode=TwoWay}"
+        Height="{Binding Height, Mode=TwoWay}"
+        Title="{localization:Localize AppShotName}"
         WindowStartupLocation="CenterScreen">
     <Design.DataContext>
         <vm:MainWindowModel />
@@ -17,15 +19,15 @@
     <Panel>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="{t:Localize _File}">
-                    <MenuItem Header="{t:Localize _Exit}" Click="OnMenu_File_Exit_Click" />
+                <MenuItem Header="{localization:Localize _File}">
+                    <MenuItem Header="{localization:Localize _Exit}" Click="OnMenu_File_Exit_Click" />
                 </MenuItem>
-                <MenuItem Header="{t:Localize _Tools}">
-                    <MenuItem Header="{t:Localize _Settings, StringFormat='{}{0}...'}"
+                <MenuItem Header="{localization:Localize _Tools}">
+                    <MenuItem Header="{localization:Localize _Settings, StringFormat='{}{0}...'}"
                               Click="OnMenu_Tools_Settings_Click" />
                 </MenuItem>
-                <MenuItem Header="{t:Localize _Help}">
-                    <MenuItem Header="{t:Localize _About, StringFormat='{}{0}...'}"
+                <MenuItem Header="{localization:Localize _Help}">
+                    <MenuItem Header="{localization:Localize _About, StringFormat='{}{0}...'}"
                               Click="OnMenu_Help_About_Click" />
                 </MenuItem>
             </Menu>

@@ -1,14 +1,12 @@
-﻿using Avalonia.Controls;
-using BTMM.ViewModels.Windows;
+﻿using BTMM.ViewModels.Windows;
 using BTMM.Views.Base;
 
 namespace BTMM.Views.Windows;
 
-public partial class SettingsWindow : BaseWindow<SettingsWindowModel>
+public partial class SettingsWindow : BaseDialog<SettingsWindow, SettingsWindowModel>
 {
     public SettingsWindow()
     {
-        WindowStartupLocation = WindowStartupLocation.CenterOwner;
         InitializeComponent();
     }
 }

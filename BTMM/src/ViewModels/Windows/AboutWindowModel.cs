@@ -4,7 +4,7 @@ using BTMM.ViewModels.Base;
 
 namespace BTMM.ViewModels.Windows;
 
-public class AboutWindowModel : BaseViewModel
+public class AboutWindowModel : BaseViewModel<AboutWindowModel>
 {
     public string Version { get; } = AppConfig.Version;
 

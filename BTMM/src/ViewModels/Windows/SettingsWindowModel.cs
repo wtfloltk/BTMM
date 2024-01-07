@@ -2,6 +2,6 @@
 
 namespace BTMM.ViewModels.Windows;
 
-public class SettingsWindowModel : BaseViewModel
+public class SettingsWindowModel : BaseViewModel<SettingsWindowModel>
 {
 }

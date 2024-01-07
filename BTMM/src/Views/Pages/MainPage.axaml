@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BTMM.ViewModels.Pages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             MinWidth="200" MinHeight="100" Width="900" Height="600"
              x:Class="BTMM.Views.Pages.MainPage">
     <Design.DataContext>
         <vm:MainPageModel />

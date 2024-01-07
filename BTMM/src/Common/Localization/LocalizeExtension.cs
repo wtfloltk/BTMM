@@ -4,7 +4,7 @@ using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 
-namespace BTMM.Utility.Localization;
+namespace BTMM.Common.Localization;
 
 public class LocalizeExtension : MarkupExtension
 {

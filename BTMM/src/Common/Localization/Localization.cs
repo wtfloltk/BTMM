@@ -4,10 +4,11 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using BTMM.Utility;
 using BTMM.Utility.Logger;
 using Newtonsoft.Json;
 
-namespace BTMM.Utility.Localization;
+namespace BTMM.Common.Localization;
 
 public class Localization : INotifyPropertyChanged
 {

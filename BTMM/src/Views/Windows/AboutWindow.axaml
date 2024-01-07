@@ -3,13 +3,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:BTMM.ViewModels.Windows"
-        xmlns:t="clr-namespace:BTMM.Utility.Localization"
+        xmlns:localization="clr-namespace:BTMM.Common.Localization"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
         x:Class="BTMM.Views.Windows.AboutWindow"
         Icon="/assets/logo.ico"
         MinWidth="200" MinHeight="100"
         Width="500" Height="200"
-        Title="{t:Localize About}">
+        Title="{localization:Localize About}">
     <Design.DataContext>
         <vm:AboutWindowModel />
     </Design.DataContext>
@@ -26,14 +26,14 @@
                         FontSize="20"
                         VerticalAlignment="Center"
                         TextAlignment="Center"
-                        Text="{t:Localize AppName}" />
+                        Text="{localization:Localize AppName}" />
                 </DockPanel>
                 <WrapPanel Margin="0,10,0,0" HorizontalAlignment="Center">
                     <TextBlock
                         TextWrapping="Wrap"
                         VerticalAlignment="Center"
                         TextAlignment="Center"
-                        Text="{t:Localize Version, StringFormat='{}{0}: '}" />
+                        Text="{localization:Localize Version, StringFormat='{}{0}: '}" />
                     <TextBlock
                         TextWrapping="Wrap"
                         VerticalAlignment="Center"
