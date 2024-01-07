@@ -50,6 +50,18 @@
           <DependentUpon>AboutWindow.axaml</DependentUpon>
           <SubType>Code</SubType>
       </Compile>
+    <Compile Update="src\Views\Pages\ModListPage.axaml.cs">
+      <DependentUpon>ModListPage.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="src\Views\Components\LogPanel.axaml.cs">
+      <DependentUpon>ModListPage.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="src\Views\Pages\InspectorPage.axaml.cs">
+      <DependentUpon>InspectPage.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
