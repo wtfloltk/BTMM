@@ -8,9 +8,7 @@
     <Design.DataContext>
         <vm:MainPageModel />
     </Design.DataContext>
+    <Panel>
 
-    <Grid RowDefinitions="*,*,Auto">
-
-
-    </Grid>
+    </Panel>
 </UserControl>

@@ -5,7 +5,7 @@
         xmlns:pages="clr-namespace:BTMM.Views.Pages"
         xmlns:vm="clr-namespace:BTMM.ViewModels"
         xmlns:localization="clr-namespace:BTMM.Common.Localization"
-        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+        mc:Ignorable="d" d:DesignWidth="916" d:DesignHeight="520"
         x:Class="BTMM.Views.MainWindow"
         Icon="/assets/logo.ico"
         MinWidth="200" MinHeight="100"
@@ -18,21 +18,20 @@
     </Design.DataContext>
     <Panel>
         <DockPanel>
-            <Menu DockPanel.Dock="Top">
+            <Menu DockPanel.Dock="Top" Height="32">
                 <MenuItem Header="{localization:Localize _File}">
-                    <MenuItem Header="{localization:Localize _Exit}" Click="OnMenu_File_Exit_Click" />
+                    <MenuItem Header="{localization:Localize _Exit}" Click="_OnMenu_File_Exit_Click" />
                 </MenuItem>
                 <MenuItem Header="{localization:Localize _Tools}">
                     <MenuItem Header="{localization:Localize _Settings, StringFormat='{}{0}...'}"
-                              Click="OnMenu_Tools_Settings_Click" />
+                              Click="_OnMenu_Tools_Settings_Click" />
                 </MenuItem>
                 <MenuItem Header="{localization:Localize _Help}">
                     <MenuItem Header="{localization:Localize _About, StringFormat='{}{0}...'}"
-                              Click="OnMenu_Help_About_Click" />
+                              Click="_OnMenu_Help_About_Click" />
                 </MenuItem>
             </Menu>
-            <TextBlock />
+            <pages:MainPage />
         </DockPanel>
-        <pages:MainPage />
     </Panel>
 </Window>

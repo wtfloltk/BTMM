@@ -7,5 +7,5 @@ public class Const
 {
     public static Cursor LinkCursor { get; } = new(StandardCursorType.Hand);
 
-    public static readonly Size DefaultWindowSize = new Size(900, 520);
+    public static readonly Size DefaultWindowSize = new(916, 520);
 }

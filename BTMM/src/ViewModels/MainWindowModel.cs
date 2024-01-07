@@ -26,6 +26,10 @@ public class MainWindowModel : BaseViewModel<MainWindowModel>
 
     private void _InitWindowSize()
     {
+#if DEBUG
+        // test default size
+        // Settings.Instance.SetWindowSize(Const.DefaultWindowSize.Width, Const.DefaultWindowSize.Height);
+#endif
         if (Settings.Instance.WindowSize != null)
         {
             Width = Settings.Instance.WindowSize.Width;
@@ -42,6 +46,11 @@ public class MainWindowModel : BaseViewModel<MainWindowModel>
 
     private static void _OnResized(double width, double height)
     {
-        Settings.Instance.SetWindowSize(width, height);
+        Log.Verbose("MainWindow Resize: {0}, {1}", width, height);
+    }
+
+    public void OnClosing()
+    {
+        Settings.Instance.SetWindowSize(Width, Height);
     }
 }
