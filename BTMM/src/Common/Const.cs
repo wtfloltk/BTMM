@@ -1,6 +1,5 @@
 ﻿using Avalonia.Input;
 using BTMM.Common.Defines;
-using BTMM.Common.Settings;
 
 namespace BTMM.Common;
 

@@ -1,5 +1,4 @@
 ﻿using Avalonia.ReactiveUI;
-using BTMM.ViewModels.Base;
 
 namespace BTMM.Views.Base;
 
