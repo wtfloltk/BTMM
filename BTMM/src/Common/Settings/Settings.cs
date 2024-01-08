@@ -10,6 +10,8 @@ public class Settings : JsonSaveObject<Settings>
 
     [JsonProperty] public Size? WindowSize { get; private set; }
 
+    [JsonProperty] public LayoutData? LayoutData { get; private set; }
+
     public bool SetLanguage(string language)
     {
         if (!Localization.Localization.Instance.InitLanguage(language)) return false;
@@ -23,6 +25,12 @@ public class Settings : JsonSaveObject<Settings>
         WindowSize ??= new Size();
         WindowSize.Width = w;
         WindowSize.Height = h;
+        Save();
+    }
+
+    public void SetLayoutData(LayoutData layoutData)
+    {
+        LayoutData = layoutData;
         Save();
     }
 }

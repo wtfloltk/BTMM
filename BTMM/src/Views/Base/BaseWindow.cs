@@ -1,4 +1,5 @@
-﻿using Avalonia.ReactiveUI;
+﻿using Avalonia.Interactivity;
+using Avalonia.ReactiveUI;
 
 namespace BTMM.Views.Base;
 
@@ -10,22 +11,18 @@ public class BaseWindow<TWindow, TViewModel> : ReactiveWindow<TViewModel>
 
     protected BaseWindow()
     {
-        _Init();
+        Loaded += _Loaded;
+        Unloaded += _Unloaded;
     }
 
-    ~BaseWindow()
-    {
-        _UnInit();
-    }
-
-    private void _Init()
+    private void _Loaded(object? sender, RoutedEventArgs e)
     {
         DataContext = new TViewModel();
         Init();
         AddEvent();
     }
 
-    private void _UnInit()
+    private void _Unloaded(object? sender, RoutedEventArgs e)
     {
         UnInit();
         RemoveEvent();

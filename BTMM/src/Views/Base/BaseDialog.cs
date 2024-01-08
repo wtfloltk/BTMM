@@ -8,9 +8,8 @@ public class BaseDialog<TWindow, TViewModel> : BaseWindow<TWindow, TViewModel>
     where TViewModel : class, new()
     where TWindow : BaseWindow<TWindow, TViewModel>, new()
 {
-    protected override void Init()
+    protected BaseDialog()
     {
-        base.Init();
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
     }
 

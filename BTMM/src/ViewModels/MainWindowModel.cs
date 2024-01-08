@@ -34,7 +34,7 @@ public class MainWindowModel : BaseViewModel<MainWindowModel>
         {
             Width = Settings.Instance.WindowSize.Width;
             Height = Settings.Instance.WindowSize.Height;
-            Log.Debug("Window Size: {0}, {1}", Width, Height);
+            Log.Debug("Load Window Setting: Window Size: {0}, {1}", Width, Height);
         }
         else
         {

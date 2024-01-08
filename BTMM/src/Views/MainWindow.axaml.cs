@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using BTMM.Utility.Logger;
 using BTMM.ViewModels;
@@ -10,11 +11,14 @@ namespace BTMM.Views;
 public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
 {
     public static MainWindow? Instance { get; private set; }
+
+    public static event Action? OnAppClosingEvent;
+
     public MainWindow()
     {
         InitializeComponent();
         Instance = this;
-        Log.Debug("MainWindow Initialize Finish!");
+        Log.Info("MainWindow Initialize Finish!");
     }
 
     protected override void AddEvent()
@@ -23,10 +27,16 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
         Closing += _OnClosing;
     }
 
+    private static void OnAppClosing()
+    {
+        OnAppClosingEvent?.Invoke();
+    }
+
     // ReSharper disable UnusedParameter.Local
     private void _OnClosing(object? sender, WindowClosingEventArgs e)
     {
         ViewModel?.OnClosing();
+        OnAppClosing();
     }
 
     private void _OnMenu_File_Exit_Click(object? sender, RoutedEventArgs e)

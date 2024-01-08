@@ -1,7 +1,7 @@
-﻿using BTMM.ViewModels.Components;
+﻿using BTMM.ViewModels.Panels;
 using BTMM.Views.Base;
 
-namespace BTMM.Views.Components;
+namespace BTMM.Views.Panels;
 
 public partial class LogPanel : BasePage<LogPanel, LogPanelModel>
 {
