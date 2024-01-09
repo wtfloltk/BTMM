@@ -25,6 +25,7 @@
                     <StackPanel.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{t:Localize RevertAllLayout}" Click="_OnRevertLayoutClick" />
+                            <MenuItem Header="{t:Localize Test}" Click="_OnTestLayoutClick" />
                         </ContextMenu>
                     </StackPanel.ContextMenu>
                     <TextBlock Text="TTTTTTTTTTTTTT" />
@@ -39,15 +40,15 @@
                 ResizeDirection="Rows" />
             <Grid Grid.Row="2" x:Name="MainGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5*" MinHeight="200" />
+                    <RowDefinition Height="400*" MinHeight="200" />
                     <RowDefinition Height="2" MinHeight="2" />
-                    <RowDefinition Height="1*" MinHeight="30" />
+                    <RowDefinition Height="80*" MinHeight="30" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" x:Name="ContentGrid">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*" MinWidth="300" />
+                        <ColumnDefinition Width="709.6*" MinWidth="300" />
                         <ColumnDefinition Width="2" MinWidth="2" />
-                        <ColumnDefinition Width="3*" MinWidth="200" />
+                        <ColumnDefinition Width="425.6*" MinWidth="200" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" x:Name="LeftContentGrid">
                         <!-- Left Content -->

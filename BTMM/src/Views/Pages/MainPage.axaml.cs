@@ -32,7 +32,7 @@ public partial class MainPage : BasePage<MainPage, MainPageModel>
 
     private void OnAppClosing()
     {
-        _SaveLayout();
+        _SaveLayoutData();
     }
 
     #region GridSplitter Change Size
@@ -43,75 +43,72 @@ public partial class MainPage : BasePage<MainPage, MainPageModel>
 
     private void _InitLayout()
     {
-        _defaultLayoutData = new LayoutData
+        _defaultLayoutData = new LayoutData();
+        _UpdateToLayoutData(_defaultLayoutData);
+        if (Settings.Instance.LayoutData != null)
         {
-            ContentHeight = MainGrid.RowDefinitions[0].ActualHeight,
-            BottomHeight = MainGrid.RowDefinitions[2].ActualHeight,
-            LeftContentWidth = ContentGrid.ColumnDefinitions[0].ActualWidth,
-            RightContentWidth = ContentGrid.ColumnDefinitions[2].ActualWidth
-        };
-        // if (Settings.Instance.LayoutData != null)
-        // {
-        //     _layoutData = Settings.Instance.LayoutData;
-        //     _UpdateLayoutDataToUI(_layoutData);
-        //     Log.Debug(
-        //         "Load Layout Setting: ContentHeight: {0}, BottomHeight: {1}, LeftContentWidth: {2}, RightContentWidth: {3}",
-        //         _layoutData.ContentHeight, _layoutData.BottomHeight, _layoutData.LeftContentWidth,
-        //         _layoutData.RightContentWidth);
-        // }
-        // else
-        // {
-        //     _layoutData = _defaultLayoutData.Copy();
-        // }
-    }
-
-    private void _SaveLayout()
-    {
-        if (_layoutData != null)
+            _layoutData = Settings.Instance.LayoutData;
+            _LoadLayoutData(_layoutData);
+            Log.Debug(
+                "Load Layout Setting: ContentHeight: {0}, BottomHeight: {1}, LeftContentWidth: {2}, RightContentWidth: {3}",
+                _layoutData.ContentHeight, _layoutData.BottomHeight, _layoutData.LeftContentWidth,
+                _layoutData.RightContentWidth);
+        }
+        else
         {
-            Settings.Instance.SetLayoutData(_layoutData);
+            _layoutData = _defaultLayoutData.Copy();
         }
     }
 
     // ReSharper disable UnusedParameter.Local
     private void _OnRowsPointerMoved(object? sender, PointerEventArgs e)
     {
-        if (_layoutData == null) return;
-        _layoutData.ContentHeight = MainGrid.RowDefinitions[0].ActualHeight;
-        _layoutData.BottomHeight = MainGrid.RowDefinitions[2].ActualHeight;
-        Log.Verbose("ContentHeight: {0}, BottomHeight: {1}", _layoutData.ContentHeight, _layoutData.BottomHeight);
+        if (_layoutData != null)
+            _UpdateToLayoutData(_layoutData);
     }
 
     private void _OnColumnsPointerMoved(object? sender, PointerEventArgs e)
     {
-        if (_layoutData == null) return;
-        _layoutData.LeftContentWidth = ContentGrid.ColumnDefinitions[0].ActualWidth;
-        _layoutData.RightContentWidth = ContentGrid.ColumnDefinitions[2].ActualWidth;
-        Log.Verbose("LeftContentWidth: {0}, RightContentWidth: {1}", _layoutData.LeftContentWidth,
-            _layoutData.RightContentWidth);
+        if (_layoutData != null)
+            _UpdateToLayoutData(_layoutData);
     }
 
     private void _OnRevertLayoutClick(object? sender, RoutedEventArgs e)
     {
         _layoutData = _defaultLayoutData?.Copy() ?? new LayoutData();
-        _UpdateLayoutDataToUI(_layoutData);
+        _LoadLayoutData(_layoutData);
     }
 
-    private void _UpdateLayoutDataToUI(LayoutData layoutData)
+    private void _OnTestLayoutClick(object? sender, RoutedEventArgs e)
     {
-        MainGrid.RowDefinitions[0].Height = _GetGridLength(MainGrid.RowDefinitions[0].Height, layoutData.ContentHeight);
-        MainGrid.RowDefinitions[2].Height = _GetGridLength(MainGrid.RowDefinitions[2].Height, layoutData.BottomHeight);
-        ContentGrid.ColumnDefinitions[0].Width =
-            _GetGridLength(ContentGrid.ColumnDefinitions[0].Width, layoutData.LeftContentWidth);
-        ContentGrid.ColumnDefinitions[2].Width =
-            _GetGridLength(ContentGrid.ColumnDefinitions[2].Width, layoutData.RightContentWidth);
+        if (_layoutData != null)
+            _LoadLayoutData(_layoutData);
     }
 
-    private GridLength _GetGridLength(GridLength gridLength, double absoluteValue)
+    private void _UpdateToLayoutData(LayoutData layoutData)
     {
-        return gridLength.IsStar
-            ? new GridLength(absoluteValue / gridLength.Value, gridLength.GridUnitType)
-            : new GridLength(absoluteValue, gridLength.GridUnitType);
+        layoutData.ContentHeight = MainGrid.RowDefinitions[0].ActualHeight;
+        layoutData.BottomHeight = MainGrid.RowDefinitions[2].ActualHeight;
+        layoutData.LeftContentWidth = ContentGrid.ColumnDefinitions[0].ActualWidth;
+        layoutData.RightContentWidth = ContentGrid.ColumnDefinitions[2].ActualWidth;
+    }
+
+    private void _SaveLayoutData()
+    {
+        Settings.Instance.SetLayoutData(_layoutData);
+    }
+
+    private void _LoadLayoutData(LayoutData layoutData)
+    {
+        MainGrid.RowDefinitions[0].Height = _GetGridLength(layoutData.ContentHeight);
+        MainGrid.RowDefinitions[2].Height = _GetGridLength(layoutData.BottomHeight);
+        ContentGrid.ColumnDefinitions[0].Width = _GetGridLength(layoutData.LeftContentWidth);
+        ContentGrid.ColumnDefinitions[2].Width = _GetGridLength(layoutData.RightContentWidth);
+    }
+
+    private static GridLength _GetGridLength(double absoluteValue)
+    {
+        return new GridLength(absoluteValue, GridUnitType.Star);
     }
     // ReSharper restore UnusedParameter.Local
 

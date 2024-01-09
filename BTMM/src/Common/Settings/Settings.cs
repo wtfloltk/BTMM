@@ -28,7 +28,7 @@ public class Settings : JsonSaveObject<Settings>
         Save();
     }
 
-    public void SetLayoutData(LayoutData layoutData)
+    public void SetLayoutData(LayoutData? layoutData)
     {
         LayoutData = layoutData;
         Save();

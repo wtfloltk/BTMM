@@ -14,5 +14,11 @@ public class LayoutData : ICloneable
 
     public LayoutData? Copy() => Clone() as LayoutData;
 
-    public object Clone() => new LayoutData();
+    public object Clone() => new LayoutData
+    {
+        ContentHeight = ContentHeight,
+        BottomHeight = BottomHeight,
+        LeftContentWidth = LeftContentWidth,
+        RightContentWidth = RightContentWidth,
+    };
 }
