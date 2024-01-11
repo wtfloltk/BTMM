@@ -3,13 +3,13 @@ using Avalonia.ReactiveUI;
 
 namespace BTMM.Views.Base;
 
-public abstract class BasePage<TPage, TViewModel> : ReactiveUserControl<TViewModel>
+public abstract class BaseComponent<TPage, TViewModel> : ReactiveUserControl<TViewModel>
     where TViewModel : class, new()
-    where TPage : BasePage<TPage, TViewModel>, new()
+    where TPage : BaseComponent<TPage, TViewModel>, new()
 {
     protected new TViewModel? ViewModel => base.ViewModel;
 
-    protected BasePage()
+    protected BaseComponent()
     {
         Loaded += _Loaded;
         Unloaded += _Unloaded;

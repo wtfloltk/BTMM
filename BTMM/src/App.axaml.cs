@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using HotAvalonia;
 using BTMM.Views;
 
 namespace BTMM;
@@ -10,6 +11,7 @@ public class App : Application
 {
     public override void Initialize()
     {
+        this.EnableHotReload();
         AvaloniaXamlLoader.Load(this);
     }
 

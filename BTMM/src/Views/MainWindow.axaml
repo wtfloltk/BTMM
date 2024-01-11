@@ -2,13 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:v="clr-namespace:BTMM.Views.Pages"
+        xmlns:components="clr-namespace:BTMM.Views.Components"
         xmlns:vm="clr-namespace:BTMM.ViewModels"
         xmlns:t="clr-namespace:BTMM.Common.Localization"
+        xmlns:panels="clr-namespace:BTMM.Views.Panels"
         mc:Ignorable="d" d:DesignWidth="916" d:DesignHeight="520"
         x:Class="BTMM.Views.MainWindow"
         Icon="/assets/logo.ico"
-        MinWidth="200" MinHeight="100"
+        MinWidth="600" MinHeight="400"
         Width="{Binding Width, Mode=TwoWay}"
         Height="{Binding Height, Mode=TwoWay}"
         Title="{t:Localize AppShotName}"
@@ -18,20 +19,67 @@
     </Design.DataContext>
     <Panel>
         <DockPanel>
-            <Menu DockPanel.Dock="Top" Height="32">
-                <MenuItem Header="{t:Localize _File}">
-                    <MenuItem Header="{t:Localize _Exit}" Click="_OnMenu_File_Exit_Click" />
-                </MenuItem>
-                <MenuItem Header="{t:Localize _Tools}">
-                    <MenuItem Header="{t:Localize _Settings, StringFormat='{}{0}...'}"
-                              Click="_OnMenu_Tools_Settings_Click" />
-                </MenuItem>
-                <MenuItem Header="{t:Localize _Help}">
-                    <MenuItem Header="{t:Localize _About, StringFormat='{}{0}...'}"
-                              Click="_OnMenu_Help_About_Click" />
-                </MenuItem>
-            </Menu>
-            <v:MainPage />
+            <components:TopMenu DockPanel.Dock="Top" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" MinHeight="40" />
+                    <RowDefinition Height="1" MinHeight="1" />
+                    <RowDefinition Height="*" MinHeight="250" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Height="40">
+                    <components:TopToolBar DockPanel.Dock="Top" />
+                </Grid>
+                <GridSplitter
+                    Grid.Row="1"
+                    Height="1"
+                    MinHeight="1"
+                    Background="Gray"
+                    Opacity="0.8"
+                    ResizeDirection="Rows" />
+                <Grid Grid.Row="2" x:Name="MainGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="400*" MinHeight="200" />
+                        <RowDefinition Height="2" MinHeight="2" />
+                        <RowDefinition Height="80*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" x:Name="ContentGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="709.6*" MinWidth="300" />
+                            <ColumnDefinition Width="2" MinWidth="2" />
+
+                            <ColumnDefinition Width="425.6*" MinWidth="200" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" x:Name="LeftContentGrid">
+                            <!-- Left Content -->
+                            <panels:ModListPanel />
+                        </Grid>
+                        <GridSplitter
+                            Grid.Column="1"
+                            Width="3"
+                            MinWidth="3"
+                            Background="Gray"
+                            Opacity="0.3"
+                            ResizeDirection="Columns"
+                            PointerMoved="_OnColumnsPointerMoved" />
+                        <Grid Grid.Column="2" x:Name="RightContentGrid">
+                            <!-- Right Content -->
+                            <panels:InspectorPanel />
+                        </Grid>
+                    </Grid>
+                    <GridSplitter
+                        Grid.Row="1"
+                        Height="3"
+                        MinHeight="3"
+                        Background="Gray"
+                        Opacity="0.3"
+                        ResizeDirection="Rows"
+                        PointerMoved="_OnRowsPointerMoved" />
+                    <Grid Grid.Row="2" x:Name="BottomContentGird">
+                        <!-- Bottom Content -->
+                        <panels:LogPanel />
+                    </Grid>
+                </Grid>
+            </Grid>
         </DockPanel>
     </Panel>
 </Window>

@@ -11,8 +11,20 @@
     <FileVersion>$(Version)</FileVersion>
     <Version>1.0.0</Version>
     <ApplicationIcon>assets\logo.ico</ApplicationIcon>
-      <Company>zelda-mods</Company>
+    <Company>zelda-mods</Company>
   </PropertyGroup>
+
+  <!-- Hot Reload -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>$(DefineConstants);ENABLE_XAML_HOT_RELOAD</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Hot Reload -->
+  <ItemGroup>
+    <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="Avalonia.Markup.Xaml.Loader" Version="$(AvaloniaVersion)"/>
+    <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="HotAvalonia" Version="1.0.1"/>
+    <PackageReference Include="HotAvalonia.Extensions" Version="1.0.1" PrivateAssets="All"/>
+  </ItemGroup>
 
   <ItemGroup>
     <AvaloniaResource Include="assets\**" />
@@ -62,6 +74,14 @@
       <DependentUpon>LogPanel.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="src\Views\Components\TopMenu.axaml.cs">
+      <DependentUpon>MainPage.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="src\Views\Components\TopToolBar.axaml.cs">
+      <DependentUpon>TopToolBar.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -71,5 +91,6 @@
   <ItemGroup>
     <UpToDateCheckInput Remove="assets\languages\en-US.json"/>
     <UpToDateCheckInput Remove="assets\languages\zh-CN.json"/>
+    <UpToDateCheckInput Remove="src\Views\Pages\MainPage.axaml"/>
   </ItemGroup>
 </Project>

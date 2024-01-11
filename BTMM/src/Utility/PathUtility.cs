@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using BTMM.Utility.Logger;
 using BTMM.Utility.Save;
 
 namespace BTMM.Utility;
@@ -14,6 +15,8 @@ public class PathUtility
     public static string UserDataPath => SaveTools.GetUserDataPath();
 
     public static string SaveDataPath => SaveTools.SaveDataPath;
+
+    public static string LogPath => Log.LogPath;
 
     public static string GetSaveDataPath(bool isSaveToApplicationFolder) =>
         SaveTools.GetSaveDataPath(isSaveToApplicationFolder);

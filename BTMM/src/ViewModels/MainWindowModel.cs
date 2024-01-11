@@ -49,6 +49,12 @@ public class MainWindowModel : BaseViewModel<MainWindowModel>
         Log.Verbose("MainWindow Resize: {0}, {1}", width, height);
     }
 
+    public void ResetWindowSize()
+    {
+        Width = Const.DefaultWindowSize.Width;
+        Height = Const.DefaultWindowSize.Height;
+    }
+
     public void OnClosing()
     {
         Settings.Instance.SetWindowSize(Width, Height);

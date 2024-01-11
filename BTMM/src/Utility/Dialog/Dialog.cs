@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Avalonia.Controls;
-using BTMM.Views.Pages;
+using BTMM.Views;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 
@@ -15,7 +15,7 @@ public class Dialog
         Icon icon = Icon.None,
         WindowStartupLocation windowStartupLocation = WindowStartupLocation.CenterOwner)
     {
-        var window = MainPage.Instance;
+        var window = MainWindow.Instance;
         if (window == null) return ButtonResult.None;
         var dialog = MessageBoxManager.GetMessageBoxStandard(title, text, @enum, icon, windowStartupLocation);
         return await dialog.ShowAsPopupAsync(window);

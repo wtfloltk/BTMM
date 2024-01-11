@@ -1,0 +1,25 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BTMM.ViewModels.Components"
+             xmlns:t="clr-namespace:BTMM.Common.Localization"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BTMM.Views.Components.TopMenu">
+    <Design.DataContext>
+        <vm:TopMenuModel />
+    </Design.DataContext>
+    <Menu Height="32">
+        <MenuItem Header="{t:Localize _File}">
+            <MenuItem Header="{t:Localize _Exit}" Click="_OnMenu_File_Exit_Click" />
+        </MenuItem>
+        <MenuItem Header="{t:Localize _Tools}">
+            <MenuItem Header="{t:Localize _Settings, StringFormat='{}{0}...'}"
+                      Click="_OnMenu_Tools_Settings_Click" />
+        </MenuItem>
+        <MenuItem Header="{t:Localize _Help}">
+            <MenuItem Header="{t:Localize _About, StringFormat='{}{0}...'}"
+                      Click="_OnMenu_Help_About_Click" />
+        </MenuItem>
+    </Menu>
+</UserControl>

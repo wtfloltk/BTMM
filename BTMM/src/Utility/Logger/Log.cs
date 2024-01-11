@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using BTMM.Common.Settings;
+using BTMM.Utility.Save;
 using Serilog;
 
 namespace BTMM.Utility.Logger;
@@ -23,17 +26,22 @@ public static class Log
 
     private static Serilog.Events.LogEventLevel FileEventLevel => (Serilog.Events.LogEventLevel)(int)FileLevel;
 
+    public static string LogPath => Settings.Instance.LogPath ?? SaveTools.GetUserDataPath();
+
+    private const string LogName = "log.txt";
+
     public static void Initialize()
     {
         Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Is(EventLevel)
             .WriteTo.Console()
             .WriteTo.Trace()
-            .WriteTo.File("log.txt",
+            .WriteTo.File(Path.Combine(LogPath, LogName),
             restrictedToMinimumLevel: FileEventLevel,
                 rollingInterval: RollingInterval.Day,
                 rollOnFileSizeLimit: true)
             .CreateLogger();
+        Verbose("Initialize Log Success: {0}", LogPath);
     }
 
     public static void Verbose(string message)
