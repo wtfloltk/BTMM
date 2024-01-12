@@ -1,10 +1,14 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text;
 using Avalonia.Controls;
-using Avalonia.Input;
-using BTMM.Common.Settings;
+using BTMM.Common;
+using BTMM.Utility;
 using BTMM.Utility.Logger;
 using BTMM.ViewModels;
 using BTMM.Views.Base;
+using NP.Ava.UniDock;
 
 namespace BTMM.Views;
 
@@ -12,19 +16,17 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
 {
     public static MainWindow? Instance { get; private set; }
 
+    private readonly DockManager _dockManager;
+
     public static event Action? OnAppClosingEvent;
 
     public MainWindow()
     {
         InitializeComponent();
         Instance = this;
-        Log.Info("MainWindow Initialize Finish!");
-    }
-
-    protected override void Init()
-    {
-        base.Init();
+        _dockManager = (DockManager)this.FindResource("TheDockManager")!;
         _InitLayout();
+        Log.Debug("MainWindow Initialize Finish!");
     }
 
     protected override void AddEvent()
@@ -41,80 +43,55 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
 
     public void OnRevertLayout()
     {
-        _OnRevertLayoutClick();
+        _OnRevertLayout();
     }
 
-    #region GridSplitter Change Size
-
-    private LayoutData? _defaultLayoutData;
-
-    private LayoutData? _layoutData;
+    #region Layout
 
     private void _InitLayout()
     {
-        _defaultLayoutData = new LayoutData();
-        _UpdateToLayoutData(_defaultLayoutData);
-        if (Settings.Instance.LayoutData != null)
-        {
-            _layoutData = Settings.Instance.LayoutData;
-            _LoadLayoutData(_layoutData);
-            Log.Debug(
-                "Load Layout Setting: ContentHeight: {0}, BottomHeight: {1}, LeftContentWidth: {2}, RightContentWidth: {3}",
-                _layoutData.ContentHeight, _layoutData.BottomHeight, _layoutData.LeftContentWidth,
-                _layoutData.RightContentWidth);
-        }
-        else
-        {
-            _layoutData = _defaultLayoutData.Copy();
-        }
-    }
-
-    // ReSharper disable UnusedParameter.Local
-    private void _OnRowsPointerMoved(object? sender, PointerEventArgs e)
-    {
-        if (_layoutData != null)
-            _UpdateToLayoutData(_layoutData);
-    }
-
-    private void _OnColumnsPointerMoved(object? sender, PointerEventArgs e)
-    {
-        if (_layoutData != null)
-            _UpdateToLayoutData(_layoutData);
-    }
-
-    private void _UpdateToLayoutData(LayoutData layoutData)
-    {
-        layoutData.ContentHeight = MainGrid.RowDefinitions[0].ActualHeight;
-        layoutData.BottomHeight = MainGrid.RowDefinitions[2].ActualHeight;
-        layoutData.LeftContentWidth = ContentGrid.ColumnDefinitions[0].ActualWidth;
-        layoutData.RightContentWidth = ContentGrid.ColumnDefinitions[2].ActualWidth;
-    }
-
-    private void _OnRevertLayoutClick()
-    {
-        _layoutData = _defaultLayoutData?.Copy() ?? new LayoutData();
-        _LoadLayoutData(_layoutData);
-        ViewModel?.ResetWindowSize();
+        _InitDockLayout();
+        _LoadDockLayout(PathConfig.PresentLayoutPath);
+        ViewModel?.InitWindowSize();
     }
 
     private void _SaveLayoutData()
     {
-        Settings.Instance.SetLayoutData(_layoutData);
+        _SaveDockLayout(PathConfig.PresentLayoutPath);
+        ViewModel?.SaveWindowSize();
     }
 
-    private void _LoadLayoutData(LayoutData layoutData)
+    private void _OnRevertLayout()
     {
-        MainGrid.RowDefinitions[0].Height = _GetGridLength(layoutData.ContentHeight);
-        MainGrid.RowDefinitions[2].Height = _GetGridLength(layoutData.BottomHeight);
-        ContentGrid.ColumnDefinitions[0].Width = _GetGridLength(layoutData.LeftContentWidth);
-        ContentGrid.ColumnDefinitions[2].Width = _GetGridLength(layoutData.RightContentWidth);
+        _RevertDockLayout();
+        ViewModel?.ResetWindowSize();
     }
 
-    private static GridLength _GetGridLength(double absoluteValue)
+    #endregion
+
+    #region Dock Layout
+
+    private void _InitDockLayout()
     {
-        return new GridLength(absoluteValue, GridUnitType.Star);
+        _SaveDockLayout(PathConfig.DefaultLayoutPath);
     }
-    // ReSharper restore UnusedParameter.Local
+
+    private void _RevertDockLayout()
+    {
+        _LoadDockLayout(PathConfig.DefaultLayoutPath);
+    }
+
+    private void _LoadDockLayout(string layoutPath)
+    {
+        if (!Fs.ExistFile(layoutPath)) return;
+        _dockManager.RestoreFromFile(layoutPath);
+    }
+
+    private void _SaveDockLayout(string layoutPath)
+    {
+        Fs.CheckFileSavePath(layoutPath);
+        _dockManager.SaveToFile(layoutPath);
+    }
 
     #endregion
 
@@ -123,7 +100,7 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
     // ReSharper disable UnusedParameter.Local
     private void _OnClosing(object? sender, WindowClosingEventArgs e)
     {
-        ViewModel?.OnClosing();
+        Log.Debug("MainWindow OnClosing");
         OnAppClosing();
     }
     // ReSharper restore UnusedParameter.Local

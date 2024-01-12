@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BTMM.ViewModels.Components"
              xmlns:t="clr-namespace:BTMM.Common.Localization"
+             xmlns:views="clr-namespace:BTMM.Views.Components"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BTMM.Views.Components.TopToolBar">
     <Design.DataContext>
@@ -24,5 +25,13 @@
                 <MenuItem Header="{t:Localize RevertAllLayout}" Click="_OnRevertLayoutClick" />
             </ContextMenu>
         </StackPanel.ContextMenu>
+        <ListBox ItemsSource="{Binding $parent[views:TopToolBar].DockItemsViewModels}" Height="70">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding Path=IsDockVisible, Mode=TwoWay}"
+                              Content="{Binding DockId}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </StackPanel>
 </UserControl>

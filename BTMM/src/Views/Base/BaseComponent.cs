@@ -11,13 +11,13 @@ public abstract class BaseComponent<TPage, TViewModel> : ReactiveUserControl<TVi
 
     protected BaseComponent()
     {
+        DataContext = new TViewModel();
         Loaded += _Loaded;
         Unloaded += _Unloaded;
     }
 
     private void _Loaded(object? sender, RoutedEventArgs e)
     {
-        DataContext = new TViewModel();
         Init();
         AddEvent();
     }

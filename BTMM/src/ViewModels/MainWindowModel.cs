@@ -12,19 +12,20 @@ public class MainWindowModel : BaseViewModel<MainWindowModel>
 
     [Reactive] public double Height { get; set; }
 
-    protected override void Init()
-    {
-        base.Init();
-        _InitWindowSize();
-    }
-
     protected override void AddEvent()
     {
         base.AddEvent();
+        _AddWindowSizeEvent();
+    }
+
+    #region Window Size
+
+    private void _AddWindowSizeEvent()
+    {
         Subscribe(x => x.Width, x => x.Height, _OnResized);
     }
 
-    private void _InitWindowSize()
+    public void InitWindowSize()
     {
 #if DEBUG
         // test default size
@@ -55,8 +56,10 @@ public class MainWindowModel : BaseViewModel<MainWindowModel>
         Height = Const.DefaultWindowSize.Height;
     }
 
-    public void OnClosing()
+    public void SaveWindowSize()
     {
         Settings.Instance.SetWindowSize(Width, Height);
     }
+
+    #endregion
 }

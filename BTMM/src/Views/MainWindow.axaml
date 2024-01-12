@@ -5,7 +5,7 @@
         xmlns:components="clr-namespace:BTMM.Views.Components"
         xmlns:vm="clr-namespace:BTMM.ViewModels"
         xmlns:t="clr-namespace:BTMM.Common.Localization"
-        xmlns:panels="clr-namespace:BTMM.Views.Panels"
+        xmlns:np="https://np.com/visuals"
         mc:Ignorable="d" d:DesignWidth="916" d:DesignHeight="520"
         x:Class="BTMM.Views.MainWindow"
         Icon="/assets/logo.ico"
@@ -13,72 +13,52 @@
         Width="{Binding Width, Mode=TwoWay}"
         Height="{Binding Height, Mode=TwoWay}"
         Title="{t:Localize AppShotName}"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        np:DockAttachedProperties.DockChildWindowOwner="{Binding RelativeSource={RelativeSource Self}}"
+        np:DockAttachedProperties.TheDockManager="{DynamicResource TheDockManager}">
     <Design.DataContext>
         <vm:MainWindowModel />
     </Design.DataContext>
+    <Window.Resources>
+        <np:DockManager x:Key="TheDockManager" />
+    </Window.Resources>
     <Panel>
         <DockPanel>
             <components:TopMenu DockPanel.Dock="Top" />
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="40" />
-                    <RowDefinition Height="1" MinHeight="1" />
-                    <RowDefinition Height="*" MinHeight="250" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Height="40">
-                    <components:TopToolBar DockPanel.Dock="Top" />
-                </Grid>
-                <GridSplitter
-                    Grid.Row="1"
-                    Height="1"
-                    MinHeight="1"
-                    Background="Gray"
-                    Opacity="0.8"
-                    ResizeDirection="Rows" />
-                <Grid Grid.Row="2" x:Name="MainGrid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="400*" MinHeight="200" />
-                        <RowDefinition Height="2" MinHeight="2" />
-                        <RowDefinition Height="80*" MinHeight="30" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" x:Name="ContentGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="709.6*" MinWidth="300" />
-                            <ColumnDefinition Width="2" MinWidth="2" />
-
-                            <ColumnDefinition Width="425.6*" MinWidth="200" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" x:Name="LeftContentGrid">
-                            <!-- Left Content -->
-                            <panels:ModListPanel />
-                        </Grid>
-                        <GridSplitter
-                            Grid.Column="1"
-                            Width="3"
-                            MinWidth="3"
-                            Background="Gray"
-                            Opacity="0.3"
-                            ResizeDirection="Columns"
-                            PointerMoved="_OnColumnsPointerMoved" />
-                        <Grid Grid.Column="2" x:Name="RightContentGrid">
-                            <!-- Right Content -->
-                            <panels:InspectorPanel />
-                        </Grid>
-                    </Grid>
-                    <GridSplitter
-                        Grid.Row="1"
-                        Height="3"
-                        MinHeight="3"
-                        Background="Gray"
-                        Opacity="0.3"
-                        ResizeDirection="Rows"
-                        PointerMoved="_OnRowsPointerMoved" />
-                    <Grid Grid.Row="2" x:Name="BottomContentGird">
-                        <!-- Bottom Content -->
-                        <panels:LogPanel />
-                    </Grid>
-                </Grid>
+            <Grid RowDefinitions="30,*">
+                <components:TopToolBar
+                    DockItemsViewModels="{Binding Path=DockItemsViewModels, Source={StaticResource TheDockManager}}"
+                    Grid.Row="0" />
+                <!-- Root Dock Group -->
+                <np:RootDockGroup Grid.Row="1" TheDockManager="{StaticResource TheDockManager}">
+                    <!-- Vertical  -->
+                    <np:StackDockGroup TheOrientation="Vertical">
+                        <!-- Top Two Panel -->
+                        <np:StackDockGroup
+                            DockId="MainTabs"
+                            TheOrientation="Horizontal"
+                            IsStableGroup="True"
+                            CanFloat="False"
+                            CanClose="False">
+                            <np:DockItem
+                                DockId="Tab1"
+                                Header="{t:Localize ModList}"
+                                CanFloat="False"
+                                CanClose="False">
+                                <TextBlock Text="{t:Localize ModList}" />
+                            </np:DockItem>
+                            <np:DockItem DockId="Tab2" Header="{t:Localize ModDetails}">
+                                <TextBlock Text="{t:Localize ModDetails}" />
+                            </np:DockItem>
+                        </np:StackDockGroup>
+                        <!-- Bottom Panel -->
+                        <np:StackDockGroup>
+                            <np:DockItem IsVisible="False" Header="{t:Localize Log}">
+                                <TextBlock Text="{t:Localize Log}" />
+                            </np:DockItem>
+                        </np:StackDockGroup>
+                    </np:StackDockGroup>
+                </np:RootDockGroup>
             </Grid>
         </DockPanel>
     </Panel>

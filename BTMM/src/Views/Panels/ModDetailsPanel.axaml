@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BTMM.ViewModels.Panels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="BTMM.Views.Panels.InspectorPanel">
+             x:Class="BTMM.Views.Panels.ModDetailsPanel">
     <Design.DataContext>
-        <vm:InspectorPanelModel />
+        <vm:ModDetailsPanelModel />
     </Design.DataContext>
     <Panel>
 

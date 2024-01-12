@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
 namespace BTMM.Utility;
 
@@ -37,5 +39,17 @@ public class StringUtility
         var m = System.Text.RegularExpressions.Regex.Match(input, regexPattern,
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         return m.Success;
+    }
+
+    public static string ReadStreamString(Stream stream)
+    {
+        // stream.Seek(0, SeekOrigin.Begin);
+        var reader = new StreamReader(stream, Encoding.UTF8);
+        return reader.ReadToEnd();
+    }
+
+    public static MemoryStream StringToMemoryStream(string content)
+    {
+        return new MemoryStream(Encoding.UTF8.GetBytes(content));
     }
 }

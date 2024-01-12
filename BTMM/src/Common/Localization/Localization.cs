@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using BTMM.Utility;
 using BTMM.Utility.Logger;
 using Newtonsoft.Json;
 
@@ -18,7 +17,7 @@ public class Localization : INotifyPropertyChanged
 
     private const string DefaultLanguage = "en-US";
 
-    private static string LanguagePath => Path.Combine(PathUtility.AppDataPath, "languages");
+    private static string LanguagePath => Path.Combine(PathConfig.AppDataPath, "languages");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
