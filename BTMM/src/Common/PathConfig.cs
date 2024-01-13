@@ -21,9 +21,9 @@ public class PathConfig
 
     public static string LogPath => Log.LogPath;
 
-    public static string PresentLayoutPath => GetLayoutPath("present");
+    public static string PresentLayoutPath => GetLayoutPath("present" + AppConfig.LayoutVersion);
 
-    public static string DefaultLayoutPath => GetLayoutPath("default");
+    public static string DefaultLayoutPath => GetLayoutPath("default" + AppConfig.LayoutVersion);
 
     public static string GetSaveDataPath(bool isSaveToApplicationFolder) =>
         SaveTools.GetSaveDataPath(isSaveToApplicationFolder);

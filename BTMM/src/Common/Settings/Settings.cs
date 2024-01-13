@@ -1,4 +1,5 @@
 ﻿using BTMM.Common.Defines;
+using BTMM.Utility.Logger;
 using BTMM.Utility.Save.SaveObject;
 using Newtonsoft.Json;
 
@@ -12,25 +13,41 @@ public class Settings : JsonSaveObject<Settings>
 
     [JsonProperty] public string? LogPath { get; private set; }
 
-    public bool SetLanguage(string language)
+    public string? SetLanguage(string language)
     {
-        if (!Localization.Localization.Instance.InitLanguage(language)) return false;
+        var err = Localization.Localization.Instance.InitLanguage(language);
+        if (!string.IsNullOrEmpty(err))
+        {
+            err = $"Change Language Error: {err}";
+            Log.Error(err);
+            return err;
+        }
         Language = language;
-        Save();
-        return true;
+        return Save();
     }
 
-    public void SetWindowSize(double w, double h)
+    public string? SetWindowSize(double w, double h)
     {
         WindowSize ??= new Size();
         WindowSize.Width = w;
         WindowSize.Height = h;
-        Save();
+        return Save();
     }
 
-    public void SetLogPath(string logPath)
+    public string? SetLogPath(string logPath)
     {
         LogPath = logPath;
-        Save();
+        return Save();
+    }
+
+    protected override string? Save()
+    {
+        var err = base.Save();
+        if (!string.IsNullOrEmpty(err))
+        {
+            Log.Error("Save Settings Error: {0}", err);
+        }
+
+        return err;
     }
 }

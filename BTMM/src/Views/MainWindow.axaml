@@ -27,33 +27,44 @@
             <components:TopMenu DockPanel.Dock="Top" />
             <Grid RowDefinitions="30,*">
                 <components:TopToolBar
-                    DockItemsViewModels="{Binding Path=DockItemsViewModels, Source={StaticResource TheDockManager}}"
-                    Grid.Row="0" />
+                    Grid.Row="0"
+                    TheDockManager="{StaticResource TheDockManager}" />
                 <!-- Root Dock Group -->
                 <np:RootDockGroup Grid.Row="1" TheDockManager="{StaticResource TheDockManager}">
                     <!-- Vertical  -->
-                    <np:StackDockGroup TheOrientation="Vertical">
+                    <np:StackDockGroup
+                        TheOrientation="Vertical"
+                        IsStableGroup="True"
+                        CanFloat="False"
+                        CanClose="False">
                         <!-- Top Two Panel -->
                         <np:StackDockGroup
-                            DockId="MainTabs"
                             TheOrientation="Horizontal"
                             IsStableGroup="True"
                             CanFloat="False"
                             CanClose="False">
                             <np:DockItem
-                                DockId="Tab1"
                                 Header="{t:Localize ModList}"
                                 CanFloat="False"
                                 CanClose="False">
                                 <TextBlock Text="{t:Localize ModList}" />
                             </np:DockItem>
-                            <np:DockItem DockId="Tab2" Header="{t:Localize ModDetails}">
+                            <np:DockItem
+                                CanFloat="False"
+                                CanClose="False"
+                                Header="{t:Localize ModDetails}">
                                 <TextBlock Text="{t:Localize ModDetails}" />
                             </np:DockItem>
                         </np:StackDockGroup>
                         <!-- Bottom Panel -->
-                        <np:StackDockGroup>
-                            <np:DockItem IsVisible="False" Header="{t:Localize Log}">
+                        <np:StackDockGroup
+                            IsStableGroup="True"
+                            CanFloat="False"
+                            CanClose="False">
+                            <np:DockItem
+                                CanFloat="False"
+                                CanClose="False"
+                                IsVisible="False" Header="{t:Localize Log}">
                                 <TextBlock Text="{t:Localize Log}" />
                             </np:DockItem>
                         </np:StackDockGroup>

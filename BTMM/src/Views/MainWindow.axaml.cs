@@ -1,7 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
 using Avalonia.Controls;
 using BTMM.Common;
 using BTMM.Utility;
@@ -16,7 +13,7 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
 {
     public static MainWindow? Instance { get; private set; }
 
-    private readonly DockManager _dockManager;
+    private DockManager? _dockManager;
 
     public static event Action? OnAppClosingEvent;
 
@@ -24,7 +21,6 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
     {
         InitializeComponent();
         Instance = this;
-        _dockManager = (DockManager)this.FindResource("TheDockManager")!;
         _InitLayout();
         Log.Debug("MainWindow Initialize Finish!");
     }
@@ -73,24 +69,52 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
 
     private void _InitDockLayout()
     {
-        _SaveDockLayout(PathConfig.DefaultLayoutPath);
+        _dockManager = this.FindResource("TheDockManager") as DockManager;
+        var defaultPath = PathConfig.DefaultLayoutPath;
+#if DEBUG
+        _SaveDockLayout(defaultPath);
+#else
+        if (!Fs.ExistFile(defaultPath))
+            _SaveDockLayout(defaultPath);
+#endif
     }
 
     private void _RevertDockLayout()
     {
+        if (_dockManager != null)
+        {
+            foreach (var rootDock in _dockManager.AllOperatingRootDockGroups)
+            {
+                Log.Info("{0}", rootDock.DockChildren);
+            }
+        }
         _LoadDockLayout(PathConfig.DefaultLayoutPath);
     }
 
     private void _LoadDockLayout(string layoutPath)
     {
         if (!Fs.ExistFile(layoutPath)) return;
-        _dockManager.RestoreFromFile(layoutPath);
+        try
+        {
+            _dockManager?.RestoreFromFile(layoutPath);
+        }
+        catch (Exception e)
+        {
+            Log.Error("Load Layout Error: {0}", e.Message);
+        }
     }
 
     private void _SaveDockLayout(string layoutPath)
     {
         Fs.CheckFileSavePath(layoutPath);
-        _dockManager.SaveToFile(layoutPath);
+        try
+        {
+            _dockManager?.SaveToFile(layoutPath);
+        }
+        catch (Exception e)
+        {
+            Log.Error("Save Layout Error: {0}", e.Message);
+        }
     }
 
     #endregion

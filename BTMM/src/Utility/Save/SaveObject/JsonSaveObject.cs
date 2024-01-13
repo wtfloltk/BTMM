@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace BTMM.Utility.Save.SaveObject;
 
@@ -26,11 +27,20 @@ public abstract class JsonSaveObject<T> where T : new()
         var obj = JsonConvert.DeserializeObject<T>(data);
         return obj ?? new T();
     }
-    public void Save()
+
+    protected virtual string? Save()
     {
-        var value = JsonConvert.SerializeObject(this);
-        SaveProxy.SetString(SaveKey, value);
-        SaveProxy.Save(SaveKey);
+        try
+        {
+            var value = JsonConvert.SerializeObject(this);
+            SaveProxy.SetString(SaveKey, value);
+            SaveProxy.Save(SaveKey);
+            return null;
+        }
+        catch (Exception e)
+        {
+            return e.Message;
+        }
     }
 
     public string GetSavePath(string key) => SaveProxy.GetSavePath(key);

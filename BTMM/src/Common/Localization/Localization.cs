@@ -74,7 +74,7 @@ public class Localization : INotifyPropertyChanged
         return File.Exists(languagePath);
     }
 
-    public bool InitLanguage(string language)
+    public string? InitLanguage(string language)
     {
         if (!ExistsLanguage(language))
         {
@@ -84,7 +84,7 @@ public class Localization : INotifyPropertyChanged
         var languagePath = Path.Combine(LanguagePath, language + ".json");
         if (!File.Exists(languagePath))
         {
-            return false;
+            return $"language notfound: {languagePath}";
         }
 
         try
@@ -94,13 +94,12 @@ public class Localization : INotifyPropertyChanged
         }
         catch (Exception e)
         {
-            Log.Error($"init language error: {e.Message}");
-            return false;
+            return $"init language error: {e.Message}";
         }
 
         Language = language;
         OnChange();
-        return true;
+        return null;
     }
 
     private void OnChange()
