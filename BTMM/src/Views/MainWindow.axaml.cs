@@ -52,13 +52,14 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
     {
         _dockManager = this.FindResource("TheDockManager") as DockManager;
         _defaultLayoutData = _SnapshotLayoutData(true);
+        _LoadLayoutData(_defaultLayoutData);
         var layoutData = Settings.Instance.LayoutData;
         _LoadLayoutData(layoutData);
     }
 
     private void _SaveLayoutData()
     {
-        var layoutData = _SnapshotLayoutData(false);
+        var layoutData = _SnapshotLayoutData();
         Settings.Instance.SetLayoutData(layoutData);
     }
 
@@ -67,7 +68,7 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
         _LoadLayoutData(_defaultLayoutData);
     }
 
-    private LayoutData _SnapshotLayoutData(bool isInitData)
+    private LayoutData _SnapshotLayoutData(bool isInitData = false)
     {
         var dockItems = new Dictionary<string, LayoutData.DockItemData>();
         var dockGroups = new Dictionary<string, LayoutData.DockGroupData>();
@@ -82,9 +83,7 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
                         if (group is not Components.StackDockGroup dockStackGroup) continue;
                         var key = dockStackGroup.Id;
                         if (string.IsNullOrEmpty(key) || dockGroups.ContainsKey(key)) continue;
-                        if (isInitData)
-                            dockStackGroup.Size = dockStackGroup.GetInitSize();
-                        var size = dockStackGroup.Size;
+                        var size = isInitData ? dockStackGroup.GetInitSize() : dockStackGroup.Size;
                         dockGroups[key] = new LayoutData.DockGroupData
                         {
                             Size = size
