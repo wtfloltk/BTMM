@@ -14,7 +14,5 @@ public class AppConfig
 
     public static string Version { get; } = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.0.0";
 
-    public static string LayoutVersion = "1.0.0";
-
     public const string Github = "https://github.com/zelda-mods/BTMM";
 }

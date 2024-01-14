@@ -1,9 +1,11 @@
-﻿namespace BTMM.Common.Defines;
+﻿using Newtonsoft.Json;
 
-public class Size
+namespace BTMM.Common.Defines;
+
+public struct Size
 {
-    public double Width;
-    public double Height;
+    [JsonProperty] public double Width { get; set; }
+    [JsonProperty] public double Height { get; set; }
 
     public Size()
     {
@@ -13,5 +15,10 @@ public class Size
     {
         Width = width;
         Height = height;
+    }
+
+    public override string ToString()
+    {
+        return $"{Width}, {Height}";
     }
 }

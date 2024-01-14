@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Controls;
-using BTMM.Common;
-using BTMM.Utility;
+using BTMM.Common.Defines;
+using BTMM.Common.Settings;
 using BTMM.Utility.Logger;
 using BTMM.ViewModels;
 using BTMM.Views.Base;
@@ -44,76 +46,137 @@ public partial class MainWindow : BaseWindow<MainWindow, MainWindowModel>
 
     #region Layout
 
+    private LayoutData? _defaultLayoutData;
+
     private void _InitLayout()
     {
-        _InitDockLayout();
-        _LoadDockLayout(PathConfig.PresentLayoutPath);
-        ViewModel?.InitWindowSize();
+        _dockManager = this.FindResource("TheDockManager") as DockManager;
+        _defaultLayoutData = _SnapshotLayoutData(true);
+        var layoutData = Settings.Instance.LayoutData;
+        _LoadLayoutData(layoutData);
     }
 
     private void _SaveLayoutData()
     {
-        _SaveDockLayout(PathConfig.PresentLayoutPath);
-        ViewModel?.SaveWindowSize();
+        var layoutData = _SnapshotLayoutData(false);
+        Settings.Instance.SetLayoutData(layoutData);
     }
 
     private void _OnRevertLayout()
     {
-        _RevertDockLayout();
-        ViewModel?.ResetWindowSize();
+        _LoadLayoutData(_defaultLayoutData);
     }
 
-    #endregion
-
-    #region Dock Layout
-
-    private void _InitDockLayout()
+    private LayoutData _SnapshotLayoutData(bool isInitData)
     {
-        _dockManager = this.FindResource("TheDockManager") as DockManager;
-        var defaultPath = PathConfig.DefaultLayoutPath;
-#if DEBUG
-        _SaveDockLayout(defaultPath);
-#else
-        if (!Fs.ExistFile(defaultPath))
-            _SaveDockLayout(defaultPath);
-#endif
-    }
-
-    private void _RevertDockLayout()
-    {
-        if (_dockManager != null)
+        var dockItems = new Dictionary<string, LayoutData.DockItemData>();
+        var dockGroups = new Dictionary<string, LayoutData.DockGroupData>();
+        try
         {
-            foreach (var rootDock in _dockManager.AllOperatingRootDockGroups)
+            if (_dockManager != null)
             {
-                Log.Info("{0}", rootDock.DockChildren);
+                foreach (var group in _dockManager.ConnectedGroups)
+                {
+                    try
+                    {
+                        if (group is not Components.StackDockGroup dockStackGroup) continue;
+                        var key = dockStackGroup.Id;
+                        if (string.IsNullOrEmpty(key) || dockGroups.ContainsKey(key)) continue;
+                        if (isInitData)
+                            dockStackGroup.Size = dockStackGroup.GetInitSize();
+                        var size = dockStackGroup.Size;
+                        dockGroups[key] = new LayoutData.DockGroupData
+                        {
+                            Size = size
+                        };
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Info("read DockGroup data error: {0}", e.Message);
+                    }
+                }
+
+                foreach (var item in _dockManager.DockLeafObjs)
+                {
+                    try
+                    {
+                        if (item is not Components.DockItem dockItem) continue;
+                        var key = dockItem.Id;
+                        if (string.IsNullOrEmpty(key) || dockItems.ContainsKey(key)) continue;
+
+                        dockItems[key] = new LayoutData.DockItemData
+                        {
+                            IsHide = !dockItem.IsDockVisible
+                        };
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Info("[_SnapshotLayoutData] read DockItem data error: {0}", e.Message);
+                    }
+                }
             }
         }
-        _LoadDockLayout(PathConfig.DefaultLayoutPath);
+        catch (Exception e)
+        {
+            Log.Error("[_SnapshotLayoutData] read dockManager data error: {0}", e.Message);
+        }
+
+        return new LayoutData
+        {
+            MainWindowSize = ViewModel?.GetWindowSize() ?? new Size(Width, Height),
+            DockItems = dockItems,
+            DockGroups = dockGroups
+        };
     }
 
-    private void _LoadDockLayout(string layoutPath)
+    private void _LoadLayoutData(LayoutData? layoutData)
     {
-        if (!Fs.ExistFile(layoutPath)) return;
+        if (layoutData == null) return;
+        ViewModel?.SetWindowSize(layoutData.MainWindowSize);
+        if (_dockManager == null) return;
         try
         {
-            _dockManager?.RestoreFromFile(layoutPath);
+            if (layoutData.DockGroups != null)
+            {
+                var groups = _dockManager.ConnectedGroups
+                    .OfType<Components.StackDockGroup>().ToList();
+                foreach (var (key, value) in layoutData.DockGroups)
+                {
+                    try
+                    {
+                        var dockStackGroup = groups.Find(g => g.Id == key);
+                        if (dockStackGroup == null) continue;
+                        dockStackGroup.Size = value.Size;
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Info("[_LoadLayoutData] write DockGroup data error: {0}", e.Message);
+                    }
+                }
+            }
+
+            // ReSharper disable once InvertIf
+            if (layoutData.DockItems != null)
+            {
+                var items = _dockManager.DockLeafObjs.OfType<Components.DockItem>().ToList();
+                foreach (var (key, value) in layoutData.DockItems)
+                {
+                    try
+                    {
+                        var dockItem = items.Find(i => i.Id == key);
+                        if (dockItem == null) continue;
+                        dockItem.IsDockVisible = !value.IsHide;
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Info("[_LoadLayoutData] write DockItem data error: {0}", e.Message);
+                    }
+                }
+            }
         }
         catch (Exception e)
         {
-            Log.Error("Load Layout Error: {0}", e.Message);
-        }
-    }
-
-    private void _SaveDockLayout(string layoutPath)
-    {
-        Fs.CheckFileSavePath(layoutPath);
-        try
-        {
-            _dockManager?.SaveToFile(layoutPath);
-        }
-        catch (Exception e)
-        {
-            Log.Error("Save Layout Error: {0}", e.Message);
+            Log.Error("[_LoadLayoutData] write dockManager data error: {0}", e.Message);
         }
     }
 

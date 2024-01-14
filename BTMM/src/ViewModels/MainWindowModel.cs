@@ -1,5 +1,5 @@
-﻿using BTMM.Common;
-using BTMM.Common.Settings;
+﻿using System.Collections.Generic;
+using BTMM.Common.Defines;
 using BTMM.Utility.Logger;
 using BTMM.ViewModels.Base;
 using ReactiveUI.Fody.Helpers;
@@ -8,9 +8,9 @@ namespace BTMM.ViewModels;
 
 public class MainWindowModel : BaseViewModel<MainWindowModel>
 {
-    [Reactive] public double Width { get; set; }
+    [Reactive] public double Width { get; set; } = 916;
 
-    [Reactive] public double Height { get; set; }
+    [Reactive] public double Height { get; set; } = 520;
 
     protected override void AddEvent()
     {
@@ -25,40 +25,21 @@ public class MainWindowModel : BaseViewModel<MainWindowModel>
         Subscribe(x => x.Width, x => x.Height, _OnResized);
     }
 
-    public void InitWindowSize()
-    {
-#if DEBUG
-        // test default size
-        // Settings.Instance.SetWindowSize(Const.DefaultWindowSize.Width, Const.DefaultWindowSize.Height);
-#endif
-        if (Settings.Instance.WindowSize != null)
-        {
-            Width = Settings.Instance.WindowSize.Width;
-            Height = Settings.Instance.WindowSize.Height;
-            Log.Debug("Load Window Setting: Window Size: {0}, {1}", Width, Height);
-        }
-        else
-        {
-            Width = Const.DefaultWindowSize.Width;
-            Height = Const.DefaultWindowSize.Height;
-            Log.Debug("Window Init Size: {0}, {1}", Width, Height);
-        }
-    }
-
     private static void _OnResized(double width, double height)
     {
         Log.Verbose("MainWindow Resize: {0}, {1}", width, height);
     }
 
-    public void ResetWindowSize()
+    public Size GetWindowSize()
     {
-        Width = Const.DefaultWindowSize.Width;
-        Height = Const.DefaultWindowSize.Height;
+        return new Size(Width, Height);
     }
 
-    public void SaveWindowSize()
+    public void SetWindowSize(Size size)
     {
-        Settings.Instance.SetWindowSize(Width, Height);
+        Width = size.Width;
+        Height = size.Height;
+        Log.Debug("Load Window Setting: Window Size: {0}, {1}", Width, Height);
     }
 
     #endregion

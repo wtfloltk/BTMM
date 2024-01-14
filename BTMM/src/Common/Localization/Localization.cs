@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using BTMM.Utility.Logger;
 using Newtonsoft.Json;
 
 namespace BTMM.Common.Localization;

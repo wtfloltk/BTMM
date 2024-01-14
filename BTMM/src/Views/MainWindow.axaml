@@ -30,45 +30,57 @@
                     Grid.Row="0"
                     TheDockManager="{StaticResource TheDockManager}" />
                 <!-- Root Dock Group -->
-                <np:RootDockGroup Grid.Row="1" TheDockManager="{StaticResource TheDockManager}">
+                <np:RootDockGroup
+                    Grid.Row="1"
+                    TheDockManager="{StaticResource TheDockManager}"
+                    InitialSizeCoeff="*">
                     <!-- Vertical  -->
-                    <np:StackDockGroup
+                    <components:StackDockGroup
+                        Id="Root"
                         TheOrientation="Vertical"
                         IsStableGroup="True"
                         CanFloat="False"
-                        CanClose="False">
+                        CanClose="False"
+                        InitSize="330* 120*">
                         <!-- Top Two Panel -->
-                        <np:StackDockGroup
+                        <components:StackDockGroup
+                            Id="Top"
                             TheOrientation="Horizontal"
                             IsStableGroup="True"
                             CanFloat="False"
-                            CanClose="False">
-                            <np:DockItem
+                            CanClose="False"
+                            InitSize="* 300">
+                            <components:DockItem
+                                Id="ModList"
                                 Header="{t:Localize ModList}"
                                 CanFloat="False"
                                 CanClose="False">
                                 <TextBlock Text="{t:Localize ModList}" />
-                            </np:DockItem>
-                            <np:DockItem
+                            </components:DockItem>
+                            <components:DockItem
+                                Id="ModDetails"
                                 CanFloat="False"
                                 CanClose="False"
                                 Header="{t:Localize ModDetails}">
                                 <TextBlock Text="{t:Localize ModDetails}" />
-                            </np:DockItem>
-                        </np:StackDockGroup>
+                            </components:DockItem>
+                        </components:StackDockGroup>
                         <!-- Bottom Panel -->
-                        <np:StackDockGroup
+                        <components:StackDockGroup
+                            Id="Bottom"
                             IsStableGroup="True"
                             CanFloat="False"
-                            CanClose="False">
-                            <np:DockItem
+                            CanClose="False"
+                            InitSize="1*">
+                            <components:DockItem
+                                Id="Log"
                                 CanFloat="False"
                                 CanClose="False"
-                                IsVisible="False" Header="{t:Localize Log}">
+                                Header="{t:Localize Log}">
                                 <TextBlock Text="{t:Localize Log}" />
-                            </np:DockItem>
-                        </np:StackDockGroup>
-                    </np:StackDockGroup>
+                            </components:DockItem>
+                        </components:StackDockGroup>
+                    </components:StackDockGroup>
                 </np:RootDockGroup>
             </Grid>
         </DockPanel>

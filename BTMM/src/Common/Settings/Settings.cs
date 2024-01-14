@@ -1,5 +1,4 @@
-﻿using BTMM.Common.Defines;
-using BTMM.Utility.Logger;
+﻿using BTMM.Utility.Logger;
 using BTMM.Utility.Save.SaveObject;
 using Newtonsoft.Json;
 
@@ -9,9 +8,9 @@ public class Settings : JsonSaveObject<Settings>
 {
     [JsonProperty] public string? Language { get; private set; }
 
-    [JsonProperty] public Size? WindowSize { get; private set; }
-
     [JsonProperty] public string? LogPath { get; private set; }
+
+    [JsonProperty] public LayoutData? LayoutData { get; private set; }
 
     public string? SetLanguage(string language)
     {
@@ -26,17 +25,15 @@ public class Settings : JsonSaveObject<Settings>
         return Save();
     }
 
-    public string? SetWindowSize(double w, double h)
-    {
-        WindowSize ??= new Size();
-        WindowSize.Width = w;
-        WindowSize.Height = h;
-        return Save();
-    }
-
     public string? SetLogPath(string logPath)
     {
         LogPath = logPath;
+        return Save();
+    }
+
+    public string? SetLayoutData(LayoutData layoutData)
+    {
+        LayoutData = layoutData;
         return Save();
     }
 

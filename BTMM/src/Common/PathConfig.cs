@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using BTMM.Utility.Logger;
 using BTMM.Utility.Save;
 
@@ -21,17 +20,8 @@ public class PathConfig
 
     public static string LogPath => Log.LogPath;
 
-    public static string PresentLayoutPath => GetLayoutPath("present" + AppConfig.LayoutVersion);
-
-    public static string DefaultLayoutPath => GetLayoutPath("default" + AppConfig.LayoutVersion);
-
     public static string GetSaveDataPath(bool isSaveToApplicationFolder) =>
         SaveTools.GetSaveDataPath(isSaveToApplicationFolder);
 
     public static string GetAssetPath(string assetPath) => AssetsPath + assetPath;
-
-    private static string GetLayoutFolderPath(string layoutName) => Path.Combine(SaveDataPath, "layouts", layoutName);
-
-    public static string GetLayoutPath(string layoutName) =>
-        Path.Combine(GetLayoutFolderPath(layoutName), "layout.xml");
 }
