@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: make all
       run: |
-        ./build_all.sh
+        chmod +x build_all.sh && echo "permission to execute added"; echo starting; ./build_all.sh && echo success; echo done;
 
     - name: upload
       uses: actions/upload-artifact@v3
