@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4.20
+    - uses: actions/checkout@v4.2
 
     - name: make all
       run: |
         ./build_all.sh
 
     - name: upload
-      uses: actions/upload-artifact@4.20
+      uses: actions/upload-artifact@4.2
       with:
         name: buildz
         path: .
